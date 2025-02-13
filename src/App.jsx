@@ -15,6 +15,9 @@ function App() {
 		duration: 10,
 	});
 
+	// Results STEP 3.6: Add some conditional logic to make sure we only handle valid user input. Specifically, we need the duration to be a positive number (a positive # of years). We can check if the duration is more than 0 and use a truthy variable to store this information. Then, we can simply wrap the <Results /> in this conditional using the && to only render the Results component when the input is valid. Otherwise, using the ! on our truthy variable with &&, we can render a short message telling the user to enter a valid duration.
+	const inputIsValid = userInput.duration >= 1;
+
 	// UserInput STEP 2.3:
 	// Event handler function: Now of course we also need the function that's triggered when the user types into one of the input fields and updates the state value through the state updater function. Since this function handles four inputs, we need to pass an inputId as an argument along with the value. Since we are updating the state based on the previous state, we need to use the functional form of the state updater function, where we get the previous state (the state variable, with its values), 'spread' (copy) that old state into the new state, and then add the new state values accordingly. In this case, we want to get the ID and use it as a key to update the value of the corresponding input.
 
@@ -38,7 +41,12 @@ function App() {
 				userInput={userInput}
 				onChangeInput={handleChange}
 			/>
-			<Results input={userInput} />
+			{!inputIsValid && (
+				<p className="center">
+					Please enter a valid duration (more than 0 years).
+				</p>
+			)}
+			{inputIsValid && <Results input={userInput} />}
 		</>
 	);
 }
